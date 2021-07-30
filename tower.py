@@ -12,10 +12,13 @@ class Circle:
 
     def collide(self, enemy):
         """
-        Q2.2)check whether the enemy is in the circle (attack range), if the enemy is in range return True
+        Q2.2)check whether the enemy is in the circle (attack range),
+        if the enemy is in range return True
         :param enemy: Enemy() object
         :return: Bool
         """
+        # xe, ye: the position of the (e)nemy
+        # xc, yc: the (c)enter of the tower
         xe, ye = enemy.get_pos()
         xc, yc = self.center
         # distance_et: difference of an (e)nemy and a (t)ower
@@ -69,14 +72,16 @@ class Tower:
             counter return to zero
         end if
         """
+        # count the cool time
         if self.cd_count < self.cd_max_count:
             self.cd_count += 1
         else:
             self.cd_count = 0
-        if self.cd_count == 0:
-            return False
-        else:
-            return True
+        # if the tower is still cooling down
+        # return True
+        # if the tower is not cooling down
+        # return False
+        return False if self.cd_count == 0 else True
 
     def attack(self, enemy_group):
         """
@@ -86,13 +91,15 @@ class Tower:
         :param enemy_group: EnemyGroup()
         :return: None
         """
-        # if the tower is not cool down
+        # if the tower is not cooling down
         if not self.is_cool_down():
-            # if enemies in the attack range
+            # get enemy in the enemy_group
             for enemy in enemy_group.get():
+                # if enemies in the attack range
                 if self.range_circle.collide(enemy):
                     # enemies get hurt
                     enemy.get_hurt(self.damage)
+                    # attack one time and break
                     break
 
     def is_clicked(self, x, y):
@@ -102,17 +109,10 @@ class Tower:
         :param x: mouse pos x
         :param y: mouse pos y
         :return: Bool
-        # create semi-transparent surface
-        transparent_surface = pygame.Surface((300, 300), pygame.SRCALPHA)
-        transparency = 0  # define transparency: 0~255, 0 is fully transparent
-        # draw the rectangle on the transparent surface
-        # x, y to get the position of center
-        xt, yt = self.rect.center
-        xr, yr = self.rect
-        pygame.draw.rect(transparent_surface, [0, 0, 0, transparency], [x, y, xr, yr])
-        win.blit(transparent_surface, (x , y)
         """
-        # x, y to get the position of center
+        # x, y get the position of mouse
+        # self.rect.x, self.rect.y, self.rect.x + self.rect.w, and self.rect.y + self.rect.w
+        # indicate a rect for triggering
         if self.rect.x <= x <= self.rect.x + self.rect.w and \
            self.rect.y <= y <= self.rect.y + self.rect.w:
             return True

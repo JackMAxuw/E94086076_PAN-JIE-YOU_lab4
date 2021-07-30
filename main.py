@@ -35,11 +35,10 @@ class Game:
         :param y: mouse pos y
         :return: None
         """
+        # get tower in group
         for tower in group.get():
-            if tower.is_clicked(x, y):
-                tower.get_selected(True)
-            else:
-                tower.get_selected(False)
+            # return True if tower is clicked else return False
+            tower.get_selected(True) if tower.is_clicked(x, y) else tower.get_selected(False)
         """
         Hint:
         for each object in group list, do
